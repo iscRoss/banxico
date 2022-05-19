@@ -1,0 +1,171 @@
+{%extends "base.html" %} {%load static %} {%block title%}<title>Banxico</title>
+
+{%endblock title%} {%block Contenido%}
+<form id="form_fecha">
+  <div class="row align-items-center">
+    <div class="col-auto">
+      <label>Fecha inicial</label>
+    </div>
+    <div class="col-auto">
+      <input type="date" class="form-control" id="f_inicial" name="f_inicial"/>
+    </div>
+    <div class="col-auto">
+      <label>Fecha final</label>
+    </div>
+    <div class="col-auto">
+      <input type="date" class="form-control" id="f_final" name="f_final" />
+    </div>
+    <div class="col-auto">
+        <button class="btn btn-primary" id="btn_consultar" type="button"><i class="fa fa-search" aria-hidden="true"></i> Consultar</button>
+    </div>
+  </div>
+</form>
+<br>
+<div class="container-fluid" id="resultados">
+  <ul class="nav nav-pills mb-3" id="pills-tab" role="tablist">
+    <li class="nav-item">
+      <a class="nav-link active" id="pills-UDIS-tab" data-bs-toggle="pill" data-bs-target="#pills-UDIS" type="button" role="tab" aria-controls="pills-UDIS" aria-selected="true">UDIS</a>
+    </li>
+    <li class="nav-item">
+      <a class="nav-link" id="pills-DOLAR-tab" data-bs-toggle="pill" data-bs-target="#pills-DOLAR" type="button" role="tab" aria-controls="pills-DOLAR" aria-selected="false">DOLAR</a>
+    </li>
+    <li class="nav-item">
+      <a class="nav-link" id="pills-TIIE-tab" data-bs-toggle="pill" data-bs-target="#pills-TIIE" type="button" role="tab" aria-controls="pills-TIIE" aria-selected="false">TIIE</a>
+    </li>
+  </ul>
+  <div class="tab-content" id="pills-tabContent">
+    <div class="tab-pane fade show active" id="pills-UDIS" role="tabpanel" aria-labelledby="pills-UDIS-tab">
+      <div class="row">
+        <div class="col">
+          <h5><label>Promedio de UDIS: </label><b>  <label id="udis_promedio"></label></b></h5>
+        </div>
+        <div class="col">
+          <h5><label>Valor máximo de UDIS: </label><b>  <label id="udis_max"></label></b></h5>
+        </div>
+        <div class="col">
+          <h5><label>Valor mínimo de UDIS:  </label><b>  <label id="udis_min"></label></b></h5>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-md-2">
+          <div class="card mb-3 shadow mb-4">
+            <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
+              <h6 class="m-0 font-weight-bold text-primary">UDIS por rangos de fechas</h6>
+            </div>
+            <table class="table">
+              <thead>
+                <th>Fecha</th>
+                <th>Datos</th>
+              </thead>
+              <tbody id="tb_resultados">
+              </tbody>
+            </table>
+          </div>
+        </div>
+        <div class="col-md-10">
+          <!-- Card Header - Dropdown -->
+          <div class="card mb-3 shadow mb-4">
+            <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
+              <h6 class="m-0 font-weight-bold text-primary">UDIS por rangos de fechas</h6>
+            </div>
+            <!-- Card Body -->
+            <div class="card-body">
+              <div class="chart-area" id="contenedor">
+                <canvas id="myChart"></canvas>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="tab-pane fade" id="pills-DOLAR" role="tabpanel" aria-labelledby="pills-DOLAR-tab">
+      <div class="row">
+        <div class="col">
+          <h5><label>Promedio de DOLAR: </label><b>  <label id="dolar_promedio"></label></b></h5>
+        </div>
+        <div class="col">
+          <h5><label>Valor máximo de DOLAR: </label><b>  <label id="dolar_max"></label></b></h5>
+        </div>
+        <div class="col">
+          <h5><label>Valor mínimo de DOLAR:  </label><b>  <label id="dolar_min"></label></b></h5>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-md-2">
+          <div class="card mb-3 shadow mb-4">
+            <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
+              <h6 class="m-0 font-weight-bold text-primary">DOLAR por rangos de fechas</h6>
+            </div>
+            <table class="table">
+              <thead>
+                <th>Fecha</th>
+                <th>Datos</th>
+              </thead>
+              <tbody id="tb_resultados_dolar">
+              </tbody>
+            </table>
+          </div>
+        </div>
+        <div class="col-md-10">
+          <!-- Card Header - Dropdown -->
+          <div class="card mb-3 shadow mb-4">
+            <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
+              <h6 class="m-0 font-weight-bold text-primary">UDIS por rangos de fechas</h6>
+            </div>
+            <!-- Card Body -->
+            <div class="card-body">
+              <div class="chart-area" id="contenedorDolar">
+                <canvas id="myChartDolar"></canvas>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="tab-pane fade" id="pills-TIIE" role="tabpanel" aria-labelledby="pills-TIIE-tab">
+      <div class="row">
+        <div class="col">
+          <h5><label>Promedio de TIIE: </label><b>  <label id="tiie_promedio"></label></b></h5>
+        </div>
+        <div class="col">
+          <h5><label>Valor máximo de TIIE: </label><b>  <label id="tiie_max"></label></b></h5>
+        </div>
+        <div class="col">
+          <h5><label>Valor mínimo de TIIE:  </label><b>  <label id="tiie_min"></label></b></h5>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-md-2">
+          <div class="card mb-3 shadow mb-4">
+            <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
+              <h6 class="m-0 font-weight-bold text-primary">TIIE por rangos de fechas</h6>
+            </div>
+            <table class="table">
+              <thead>
+                <th>Fecha</th>
+                <th>Datos</th>
+              </thead>
+              <tbody id="tb_resultados_tiie">
+              </tbody>
+            </table>
+          </div>
+        </div>
+        <div class="col-md-10">
+          <!-- Card Header - Dropdown -->
+          <div class="card mb-3 shadow mb-4">
+            <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
+              <h6 class="m-0 font-weight-bold text-primary">TIIE por rangos de fechas</h6>
+            </div>
+            <!-- Card Body -->
+            <div class="card-body">
+              <div class="chart-area" id="contenedorTiie">
+                <canvas id="myChartTiie"></canvas>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+</div>
+</div>
+{%endblock Contenido%}
